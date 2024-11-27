@@ -1,16 +1,25 @@
 import { API } from "../api/Api.js";
 import { Erro, Sucesso } from "../model/Resposta.js";
 
+/**
+ * Classe controladora com metodos de validação, atribuição de valores e consulta a API
+ */
 export class Controller{
     #moeda_origem
     #moeda_destino
     #valor
     #api
 
+    /**
+     * Inicia a API
+     */
     constructor(){
         this.#api = new API();
     }
 
+    /**
+     * Retorna o valor da conversão
+     */
     get valor(){
         return this.#valor;
     }
@@ -49,6 +58,11 @@ export class Controller{
         return new Sucesso(this.#moeda_destino);
     }
 
+    /**
+     * Define qual o valor que será convertido
+     * @param {string} valor 
+     * @returns {Sucesso | Erro}
+     */
     setValor(valor){
         const isValido = this.#validaValor(valor);
         if(!isValido.sucesso)
@@ -81,7 +95,7 @@ export class Controller{
     }
 
     /**
-     * 
+     * Valida se uma moeda é válida
      * @param {String} moeda 
      * @returns {Sucesso | Erro}
      */
@@ -93,7 +107,7 @@ export class Controller{
     }
 
     /**
-     * 
+     * Verifica se valor é válido e converte para float com duas casas decimais
      * @param {String} valor 
      * @returns {Erro | Sucesso} - Data possui o valor com duas casas decimais
      */
