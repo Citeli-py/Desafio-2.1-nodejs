@@ -3,13 +3,18 @@ import PromptSync from "prompt-sync";
 import { Erro, Sucesso } from "./model/Resposta.js";
 
 
+/**
+ * Classe com as funções principais de I/O e comunicação com o controller
+ */
 class Conversor{
 
     /**
-     * 
+     * Lê uma entrada e valida-a enquanto ela for invalida, se valida retorna a entrada.
+     * Se sairSeVazio é verdadeiro, caso a entrada seja "" ele retorna "".
      * @param {String} mensagem 
-     * @param {(entrada: String)=> Sucesso | Erro} metodo 
-     * @returns {String} Retorna a entrada válida
+     * @param {(entrada: String)=> Sucesso | Erro} metodo - Metodo de validação
+     * @param {boolean} sairSeVazio - Se verdadeiro, ele para o loop caso a entrada seja vazia
+     * @returns {String} - Retorna a entrada válida
      */
     static #lerEntrada(mensagem, metodo, sairSeVazio=false) {
 
@@ -47,15 +52,16 @@ class Conversor{
     }
 
     /**
-     * 
-     * @param {Sucesso | Erro} response 
-     * @param {string} valor 
+     * Exibe os resultados da conversão de moedas
+     * @param {Sucesso | Erro} response - Resposta da chamada da api encapsulada em um erro ou sucesso
+     * @param {string} valor - Valor a ser convertido
      */
     static #printResult(response, valor){
         if(!response.sucesso){
             console.log(response.erro);
             return;
         }
+
         const data = response.data;
 
         console.log(`\n${data.base_code} ${valor} => ${data.target_code} ${data.conversion_result.toFixed(2)}`)
