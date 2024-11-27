@@ -20,7 +20,7 @@ export class API{
      * @param {string} moeda_origem - Código da moeda de origem (ex.: 'USD')
      * @param {string} moeda_destino - Código da moeda de destino (ex.: 'EUR')
      * @param {number} valor - Valor a ser convertido
-     * @returns {Promise<Sucesso | Erro>} Valor convertido
+     * @returns {Promise<Sucesso | Erro>} - Retorna sucesso junto da resposta da requisição
      */
     async getConversion(moeda_origem, moeda_destino, valor) {
         try {
