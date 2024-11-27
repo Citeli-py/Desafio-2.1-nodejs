@@ -6,11 +6,14 @@ import { Erro, Sucesso } from '../model/Resposta.js';
 // GET https://v6.exchangerate-api.com/v6/YOUR-API-KEY/pair/MOEDA-ORIGEM/MOEDA-DESTINO/VALOR
 
 /**
- * API faz apenas as operações com a API
+ * Classe que realiza operações com a API
  */
 export class API{
     #url
 
+    /**
+     * Define a url para requisição com a API
+     */
     constructor(){
         this.#url = `https://v6.exchangerate-api.com/v6/${process.env.API_KEY}/pair`;
     }
@@ -46,6 +49,11 @@ export class API{
         }
     }
 
+    /**
+     * Retorna um Erro baseada na resposta da API
+     * @param {Object} response - resposta retornada pela API
+     * @returns {Erro} - Erro dado pela API
+     */
     #processarErros(response){
         const erro = response['error-type'];
 
