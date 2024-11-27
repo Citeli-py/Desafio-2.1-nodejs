@@ -11,6 +11,10 @@ export class Controller{
         this.#api = new API();
     }
 
+    get valor(){
+        return this.#valor;
+    }
+
     /**
      * Define qual sera a moeda de origem
      * @param {String} moeda 
@@ -55,15 +59,19 @@ export class Controller{
     }
 
 
+    /**
+     * Chama a API para converter os valores monetários
+     * @returns {Promise<Sucesso | Erro>}
+     */
     async converter(){
         if(this.#moeda_origem == null)
-            throw new Error("valor de moeda origem não definido");
+            throw new Erro("valor de moeda origem não definido");
 
         if(this.#moeda_destino == null)
-            throw new Error("valor de moeda destino não definido");
+            throw new Erro("valor de moeda destino não definido");
 
         if(this.#valor == null)
-            throw new Error("valor de \"valor\" não definido");
+            throw new Erro("valor de \"valor\" não definido");
             
 
         const resultado = await this.#api.getConversion(this.#moeda_origem, this.#moeda_destino, this.#valor);
@@ -87,9 +95,13 @@ export class Controller{
     /**
      * 
      * @param {String} valor 
-     * @returns {Erro | Sucesso}
+     * @returns {Erro | Sucesso} - Data possui o valor com duas casas decimais
      */
     #validaValor(valor){
+
+        if(!valor.includes(','))
+            return new Erro("Erro: valor tem que ser separado por virgula");
+
         const [inteiro, decimal] = valor.split(",")
 
         const valor_float = Number(`${inteiro}.${decimal}`);
